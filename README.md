@@ -1,5 +1,7 @@
 ## React Best Practices [2023]
 
+Please, open Pull Requests and suggest improvements & additions
+
 ### Table of Contents
 
 1. [Introduction](#introduction)
