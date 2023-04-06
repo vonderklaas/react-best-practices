@@ -2,16 +2,22 @@
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Why Review Code?](#why-review-code)
-3. [Basics](#basics)
-4. [Readability](#readability)
-5. [Side Effects](#side-effects)
-6. [Limits](#limits)
-7. [Security](#security)
-8. [Performance](#performance)
-9. [Testing](#testing)
-10. [Miscellaneous](#miscellaneous)
+[Introduction](#introduction)
+[Use Functional components](#use-functional-components)
+[Keep JSX clean](#keep-jsx-clean)
+[Conditional rendering](#conditional-rendering)
+[Components are not templates](#components-are-not-templates)
+[Make components](#make-components)
+[TypeScript](#typescript)
+[Dont worry about re-renders](#dont-worry-about-renders)
+[Understand dependency arrays](#understand-dependency-arrays)
+[Use useCallback or useMemo](#use-usecallback-or-usememo)
+[Custom Hooks](#custom-hooks)
+[Reuse things](#reuse-things)
+[Be careful with state](#be-careful-with-state)
+[Use Query library](#use-query-library)
+[Dont use Redux unless you need it](#dont-use-redux-unless-you-need-it)
+[Dont build your own UI library](#dont-build-your-own-ui-library)
 
 ## Introduction
 
@@ -19,13 +25,90 @@ The problem with React, is that it is opinionated, yet provides many ways to sol
 the same problem. That allow developers with plenty of room to screw things up with
 our own stupid ideas. Here are some anti-patterns and tips and tricks to improve our code.
 
-## Functional Components > Class Components
+## Use Functional Components
 
 Use Functional Components instead of Class Based Components. Functional Components
 have a much better state management mechanism. In React 16.8 hooks were announced,
 and they create reactive state management model right into React. Using `useState` and `useReducer` you declare your state, and using `useEffect`, `useCallback` and `useMemo` you react to changes in that state. And this few hooks created a ecosystem of awesome custom hooks. There are hooks to get access to API, animations, saving data in localStorage and more.
 
-## Functional Components are not Templates
+## Keep JSX clean
+
+```javascript
+import useFetchPosts from '../hooks/useFetchPosts.js';
+
+export default function FeaturedPosts() {
+  const posts = useFetchPosts()
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li onClick={event => {
+          console.log(event.target, 'clicked!');
+        }} key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default function FeaturedPosts() {
+  const posts = useFetchPosts()
+
+  function handlePostClick(event) {
+    console.log(event.target, 'clicked!');
+  }
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li onClick={handlePostClick} key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## Use Conditional Rendering
+
+```javascript
+import React, { useState } from 'react'
+
+// one condition
+export const ConditionalRenderingWhenTrueGood = () => {
+  const [showConditionalText, setShowConditionalText] = useState(false)
+
+  const handleClick = () =>
+    setShowConditionalText(showConditionalText => !showConditionalText)
+
+  return (
+    <div>
+      <button onClick={handleClick}>Toggle the text</button>
+      {showConditionalText && <p>The condition must be true!</p>}
+    </div>
+  )
+}
+
+
+import React, { useState } from 'react'
+
+export const ConditionalRenderingGood = () => {
+  const [showConditionOneText, setShowConditionOneText] = useState(false)
+
+  const handleClick = () =>
+    setShowConditionOneText(showConditionOneText => !showConditionOneText)
+
+  return (
+    <div>
+      <button onClick={handleClick}>Toggle the text</button>
+      {showConditionOneText ? (
+        <p>The condition must be true!</p>
+      ) : (
+        <p>The condition must be false!</p>
+      )}
+    </div>
+  )
+```
+
+## Components are not Templates
 
 Don’t think of Functional Components as templates. This piece of code cause an infinite loop. `setUsers` will compare previous value and new one,by using `===` operator, and if it were number or a string, it may work, but in this case, with an array or objects, JavaScript will compare not by value, but by reference, and in this case, it will not match, and the state will be updated.
 State update will cause another render of `UserList` function, and fetch will run again, and so on and so on.
@@ -73,11 +156,11 @@ const UserList = () => {
 };
 ```
 
-## Dont use big components, break down into smaller pieces, but not too much
+## Make Components
 
 BLA BLA BLA
 
-## Use TypeScript
+## TypeScript
 
 TypeScript helps you to make more robust and reliable applications. There are two times when TypeScript generally touches the React application. The first one is when you defining your types, the kind of data shapes that comeback from the server. The over time is when you are defining your React components
 
@@ -115,7 +198,7 @@ const MyList = ({ list, onClick }: MyListProps) => {
 };
 ```
 
-## Don’t worry about re-renders
+## Dont worry about renders
 
 Whenever you return as JSX, is actually created using `createElement` method, which
 eventually returns a Virtual DOM Node and adds it to Virtual DOM Tree, which is in-memory representation of actual DOM Tree should look like. And it is up to React to traverse that Virtual DOM Tree and then synchronize it with the real DOM Tree. It creates, deletes and updates. Nodes, but if there are no changes, then nothing happens.
@@ -130,7 +213,7 @@ const Title = ({ caption }: { caption: string }) => {
 
 If you are getting a lot of re-renders, it is probably just a bug, probably a `useEffect` that has gone into an infinite loop, because of bad dependency array. But if you are legitemaly seeing perfroamnce problems, there are a lot of tools that help you diagnose and fix them. But a strong reccomendtation will be is don’t fight the freamwork, dont try to prematurely optimise your applicaiton by worrying so much about whever or not specific components are re-rendering
 
-## Learn to love dependency arrays
+## Understand dependency arrays
 
 Dependency arrays are the arrays at the end of useEffect, useMemo and useCallback. They tell React when, for example your useEffect should run. So if any items in that [] are changed, then your hook re-runs.
 
@@ -169,7 +252,7 @@ Dont disable Linting, because in different cases it can help and suggest what th
 Another thing to watch for in `[]` is when you have there an array or an object or a function, because React uses the same logic that it uses in that state setter to decide whether the value is the same or different, between the old and new one. For strings, booleans and numbers it does it by value, which is very predictible. However when it comes to arrays, objects and functions it doesn’t look at the contents, it doesn’t do a deep compare, it instead does a referential
 compare: is this exactly the same array. So be careful with that.
 
-## Don’t ignore useCallback or useMemo
+## Use useCallback or useMemo
 
 These hooks are vital to react state management model. If they are used properly, to retain referential identity, they can be a performance enhancement. Memoize === remember.
 
@@ -233,7 +316,7 @@ const sortFunc = useCallback((a, b) => .... []);
 <NamesList names={names} sortFunc={sortFunc} />
 ```
 
-## Use Custom Hooks
+## Custom Hooks
 
 Make your own custom hooks. They are a collections of hooks, gathered together as a function, that acomplishes a specific task.
 
@@ -264,7 +347,7 @@ const FeaturedPosts = () => {
 };
 ```
 
-## Create a system of proper resuing of components
+## Reuse things
 
 ```javascript
 // Bad: Component is not extendable
@@ -321,7 +404,7 @@ const ThingieWithTitleAndText = ({ title, ...others }) => {
 };
 ```
 
-## Be Careful with setting state
+## Be careful with state
 
 Always set state as a function of the previous state if the new state relies on the previous state. React state updates can be batched, and not writing your updates this way can lead to unexpected results.
 
@@ -376,89 +459,6 @@ export const PreviousStateGood = () => {
     </div>
   );
 };
-```
-
-## Keep JSX Clean from JS
-
-```javascript
-import useFetchPosts from '../hooks/useFetchPosts.js';
-
-export default function FeaturedPosts() {
-  const posts = useFetchPosts()
-
-  return (
-    <ul>
-      {posts.map((post) => (
-        <li onClick={event => {
-          console.log(event.target, 'clicked!');
-        }} key={post.id}>{post.title}</li>
-      ))}
-    </ul>
-  );
-}
-
-
-
-// src/components/FeaturedPosts.js
-
-import useFetchPosts from '../hooks/useFetchPosts.js';
-
-export default function FeaturedPosts() {
-  const posts = useFetchPosts()
-
-  function handlePostClick(event) {
-    console.log(event.target, 'clicked!');
-  }
-
-  return (
-    <ul>
-      {posts.map((post) => (
-        <li onClick={handlePostClick} key={post.id}>{post.title}</li>
-      ))}
-    </ul>
-  );
-}
-```
-
-## Use Conditional Rendering
-
-```javascript
-import React, { useState } from 'react'
-
-// one condition
-export const ConditionalRenderingWhenTrueGood = () => {
-  const [showConditionalText, setShowConditionalText] = useState(false)
-
-  const handleClick = () =>
-    setShowConditionalText(showConditionalText => !showConditionalText)
-
-  return (
-    <div>
-      <button onClick={handleClick}>Toggle the text</button>
-      {showConditionalText && <p>The condition must be true!</p>}
-    </div>
-  )
-}
-
-
-import React, { useState } from 'react'
-
-export const ConditionalRenderingGood = () => {
-  const [showConditionOneText, setShowConditionOneText] = useState(false)
-
-  const handleClick = () =>
-    setShowConditionOneText(showConditionOneText => !showConditionOneText)
-
-  return (
-    <div>
-      <button onClick={handleClick}>Toggle the text</button>
-      {showConditionOneText ? (
-        <p>The condition must be true!</p>
-      ) : (
-        <p>The condition must be false!</p>
-      )}
-    </div>
-  )
 ```
 
 ## Use Query Library
@@ -556,7 +556,7 @@ export const WithReactQuery = () => {
 };
 ```
 
-## Don’t use Redux unless you need it
+## Dont use Redux unless you need it
 
 Couple years back, when React introduced hooks and new reactive state management model,
 the idea of requiring efectively an external state manager like Redux, didnt become as important. You can now go and use Context and Hooks to maintain state globaly and closer to where you actually use it.
