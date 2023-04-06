@@ -2,22 +2,22 @@
 
 ## Table of Contents
 
-[Introduction](#introduction)
-[Use Functional components](#use-functional-components)
-[Keep JSX clean](#keep-jsx-clean)
-[Conditional rendering](#conditional-rendering)
-[Components are not templates](#components-are-not-templates)
-[Make components](#make-components)
-[TypeScript](#typescript)
-[Dont worry about re-renders](#dont-worry-about-renders)
-[Understand dependency arrays](#understand-dependency-arrays)
-[Use useCallback or useMemo](#use-usecallback-or-usememo)
-[Custom Hooks](#custom-hooks)
-[Reuse things](#reuse-things)
-[Be careful with state](#be-careful-with-state)
-[Use Query library](#use-query-library)
-[Dont use Redux unless you need it](#dont-use-redux-unless-you-need-it)
-[Dont build your own UI library](#dont-build-your-own-ui-library)
+1. [Introduction](#introduction)
+2. [Use Functional components](#use-functional-components)
+3. [Keep JSX clean](#keep-jsx-clean)
+4. [Conditional rendering](#conditional-rendering)
+5. [Components are not templates](#components-are-not-templates)
+6. [Make components](#make-components)
+7. [TypeScript](#typescript)
+8. [Dont worry about re-renders](#dont-worry-about-renders)
+9. [Understand dependency arrays](#understand-dependency-arrays)
+10. [Use useCallback or useMemo](#use-usecallback-or-usememo)
+11. [Custom Hooks](#custom-hooks)
+12. [Reuse things](#reuse-things)
+13. [Be careful with state](#be-careful-with-state)
+14. [Use Query library](#use-query-library)
+15. [Dont use Redux unless you need it](#dont-use-redux-unless-you-need-it)
+16. [Dont build your own UI library](#dont-build-your-own-ui-library)
 
 ## Introduction
 
