@@ -1,6 +1,11 @@
-## React Best Practices [2023]
+# React Best Practices [2023]
 
-Please, open Pull Requests and suggest improvements & additions
+### Why?
+
+React is often described as "unopinionated" because it doesn't impose a strict architecture or set of rules on developers. Instead, it provides a flexible set of tools for building user interfaces, and it's up to developers to decide how to use those tools.
+
+However, just because React doesn't enforce a specific way of doing things doesn't mean that best practices and clean code don't matter. In fact, following best practices and writing clean code is essential to building high-quality, maintainable React applications.
+
 
 ### Table of Contents
 
@@ -69,7 +74,7 @@ export default function FeaturedPosts() {
 }
 ```
 
-### Use Conditional Rendering
+### Conditional Rendering
 
 ```javascript
 import React, { useState } from 'react'
@@ -160,7 +165,9 @@ const UserList = () => {
 
 ### Make Components
 
-BLA BLA BLA
+Breaking down large files into smaller components is a good practice in React for a number of reasons. Firstly, it helps to make your code more modular and reusable. By dividing your code into smaller, more focused components, you can create a library of building blocks that can be used to quickly and easily build new features.
+
+Secondly, smaller components can be easier to reason about and debug. When a component is responsible for a small, well-defined piece of functionality, it becomes easier to understand what that component does and how it fits into the larger picture. This can save time and effort when debugging issues or making changes to your code.
 
 ### TypeScript
 
