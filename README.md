@@ -1,18 +1,15 @@
 ### React Best Practices - 2023
 
-I've collected some *React* best practices that can help you write clean, maintainable, and high-performing JavaScript code. Feel free to open Pull Requests for improvements
+I've collected some *React* best practices that can help you write clean, maintainable, and high-performing JavaScript code. Feel free to open Pull Requests for improvements.
 
 ### Why?
 
-React is often described as "unopinionated" because it doesn't impose a strict architecture or set of rules on developers. Instead, it provides a flexible set of tools for building user interfaces, and it's up to developers to decide how to use those tools.
-
-However, just because React doesn't enforce a specific way of doing things doesn't mean that best practices and clean code don't matter. In fact, following best practices and writing clean code is essential to building high-quality, maintainable React applications.
-
+React is often referred to as "unopinionated" due to its flexible nature that allows developers to use a range of tools to build user interfaces in their preferred way. However, this doesn't mean that following best practices and writing clean code is any less important. In fact, adhering to best practices and ensuring code cleanliness is crucial to developing high-quality and maintainable React applications, even if React itself doesn't impose a rigid architecture or set of rules.
 
 ### Table of Contents
 
 1. [Introduction](#introduction)
-2. [Use Functional components](#use-functional-components)
+2. [Functional Components](#functional-components)
 3. [Keep JSX clean](#keep-jsx-clean)
 4. [Conditional rendering](#conditional-rendering)
 5. [Components are not templates](#components-are-not-templates)
@@ -30,15 +27,11 @@ However, just because React doesn't enforce a specific way of doing things doesn
 
 ### Introduction
 
-The problem with React, is that it is opinionated, yet provides many ways to solve
-the same problem. That allow developers with plenty of room to screw things up with
-our own stupid ideas. Here are some anti-patterns and tips and tricks to improve our code.
+One of the challenges of using React is that it is opinionated but provides multiple approaches to solve the same problem. This can lead to developers making mistakes by implementing their own misguided ideas. To help avoid this, here are some anti-patterns and best practices to improve your React code.
 
-### Use Functional Components
+### Functional Components
 
-Use Functional Components instead of Class Based Components. Functional Components
-have a much better state management mechanism. In React 16.8 hooks were announced,
-and they create reactive state management model right into React. Using `useState` and `useReducer` you declare your state, and using `useEffect`, `useCallback` and `useMemo` you react to changes in that state. And this few hooks created a ecosystem of awesome custom hooks. There are hooks to get access to API, animations, saving data in localStorage and more.
+Using Functional Components instead of Class Components is a better choice for managing state in React. Functional Components have an improved state management mechanism, especially with the introduction of React 16.8 hooks. These hooks, such as useState and useReducer, allow for a reactive state management model. You can declare your state using these hooks and react to changes in that state with useEffect, useCallback, and useMemo. However, if you require an Error Boundary component, you will have to use Class Components as they provide access to important lifecycle method that are not available in Functional Components.
 
 ### Keep JSX clean
 
