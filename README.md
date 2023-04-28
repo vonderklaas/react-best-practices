@@ -1,5 +1,7 @@
 ### React Best Practices - 2023
 
+I've collected some *React* best practices that can help you write clean, maintainable, and high-performing JavaScript code. Feel free to open Pull Requests for improvements
+
 ### Why?
 
 React is often described as "unopinionated" because it doesn't impose a strict architecture or set of rules on developers. Instead, it provides a flexible set of tools for building user interfaces, and it's up to developers to decide how to use those tools.
