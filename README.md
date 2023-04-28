@@ -1,4 +1,4 @@
-# React Best Practices [2023]
+### React Best Practices - 2023
 
 ### Why?
 
